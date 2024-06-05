@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 
 <head>
     <title>TOP-yhteystietolomake</title>
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="kuvat/favicon_io/favicon.ico" type="image/x-icon">
     <style>
         body {
             width: 100%;
@@ -127,13 +127,13 @@
 <body>
     <div class="container">
         <div class="logo" style="justify-content: flex-start;">
-            <img src="sasky_logo.png" alt="SASKY Logo">
+            <img src="kuvat/sasky_logo.png" alt="SASKY Logo">
         </div>
         <form id="form">
 
             <div class="input-field">
                 <label for="nimi">Opiskelijan nimi:</label><br>
-                <input type="text" id="nimi" name="nimi" placeholder="Kirjoita nimesi ja ryhmäsi tunnus"><br>
+                <input type="text" id="nimi" name="nimi" placeholder="Kirjoita nimesi ja ryhmäsi tähän"><br>
             </div>
             <div class="input-field">
                 <label for="tutkinnon_osat">Suoritettavat tutkinnon osat:</label><br>
@@ -212,6 +212,12 @@
                 <button type="button" class="button" onclick="generatePDF()">Lataa ja jaa PDF</button>
             </div>
             <div class="footer">
+                <p><a href="https://eperusteet.opintopolku.fi/#/fi/" target="_blank">Eperusteet</a></p>
+                <p><a href="https://eperusteet.opintopolku.fi/#/fi/ammatillinen/8505690/tutkinnonosat"
+                        target="_blank">Liiketoiminnan perustutkinto OPH-4394-2023</a></p>
+                <p><a href="https://eperusteet.opintopolku.fi/#/fi/ammatillinen/7846211/tutkinnonosat"
+                        target="_blank">Liiketoiminnan perustutkinto OPH-5162-2021</a></p>
+
                 <p>&copy; Jan Tuominen SASKY Tampereen palvelualan ammattiopisto</p>
             </div>
         </form>
@@ -248,12 +254,12 @@
 
             // Lisää logo ylämarginaaliin keskelle
             var img = new Image();
-            img.src = 'sasky_logo.png';
+            img.src = 'kuvat/sasky_logo.png';
             //doc.addImage(img, 'PNG', (doc.internal.pageSize.getWidth() / 2) - 50, 10, 20, 20);
 
             // Lisää logo ylämarginaaliin oikealle
             var img = new Image();
-            img.src = 'sasky_logo.png';
+            img.src = 'kuvat/sasky_logo.png';
             var pageWidth = doc.internal.pageSize.getWidth();
             var logoWidth = 20; // Logo leveys
             var margin = 10; // Marginaali
