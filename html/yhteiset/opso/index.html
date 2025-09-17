@@ -1,1 +1,69 @@
+<!DOCTYPE html>
+<html lang="fi">
 
+<head>
+    <meta charset="UTF-8">
+    <title>Asiakaspalvelu</title>
+    <style>
+        .drag-text {
+            padding: 10px;
+            display: inline-block;
+            background-color: #e0e0e0;
+            cursor: grab;
+            user-select: none;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Koulutuskorvaus</h2>
+    <div id="koulutuskorvaus-container"></div>
+
+    <h2>Muut sovitut asiat</h2>
+    <div id="muut_sovitut_asiat-container"></div>
+
+    <script>
+        function enableDrag(selector) {
+            const container = document.querySelector(selector);
+            const dragEl = container.querySelector('.drag-text');
+            if (dragEl) {
+                dragEl.addEventListener('dragstart', function (e) {
+                    e.dataTransfer.setData('text/plain', dragEl.textContent);
+                });
+            }
+        }
+
+        function loadExternalContent(containerId, fileName) {
+            fetch(fileName)
+                .then(response => response.text())
+                .then(data => {
+                    const container = document.getElementById(containerId);
+                    container.innerHTML = data;
+                    enableDrag('#' + containerId);
+                })
+                .catch(error => {
+                    console.error('Virhe ladattaessa tiedostoa:', fileName, error);
+                });
+        }
+
+        loadExternalContent('koulutuskorvaus-container', 'koulutuskorvaus.html');
+        loadExternalContent('muut_sovitut_asiat-container', 'muut_sovitut_asiat.html');
+
+        document.body.addEventListener('dragover', function (e) {
+            e.preventDefault();
+        });
+
+        document.body.addEventListener('drop', function (e) {
+            e.preventDefault();
+            const data = e.dataTransfer.getData('text/plain');
+            const p = document.createElement('p');
+            p.textContent = data;
+            document.body.appendChild(p);
+        });
+    </script>
+
+</body>
+
+</html>
