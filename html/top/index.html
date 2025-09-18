@@ -1,1 +1,314 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>TOP-yhteystietolomake</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        body {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            font-size: 170%;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 130vh;
+            width: 97%;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .logo img {
+            max-width: 200px;
+            height: auto;
+        }
+
+        .input-field {
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        textarea,
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"] {
+            overflow: hidden;
+            resize: none;
+            width: 100%;
+            font-size: 1em;
+            border: 1px solid #ccc;
+        }
+
+        textarea {
+            height: 2em;
+        }
+
+        @media screen and (max-width: 600px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .input-field {
+                width: 100%;
+            }
+
+            textarea,
+            input[type="text"],
+            input[type="email"],
+            input[type="tel"] {
+                font-size: 2em;
+            }
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .button {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 1em;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* PDF-spesifiset tyylit */
+        .pdf {
+            font-size: 70%;
+        }
+
+        @media screen and (max-width: 600px) {
+            .button {
+                padding: 20px 40px;
+                font-size: 2em;
+            }
+        }
+
+        @media print {
+            .button-container {
+                display: none;
+            }
+        }
+
+        .footer {
+            position: relative;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: transparent;
+            color: black;
+            text-align: left;
+            padding: 10px;
+            font-size: 0.6em;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="logo" style="justify-content: flex-start;">
+            <img src="sasky_logo.png" alt="SASKY Logo">
+        </div>
+        <form id="form">
+
+            <div class="input-field">
+                <label for="nimi">Opiskelijan sähköposti:</label><br>
+                <input type="text" id="nimi" name="nimi" placeholder="Kirjoita sähköpostiosoitteesi tähän"><br>
+            </div>
+            <div class="input-field">
+                <label for="tutkinnon_osat">Suoritettavat tutkinnon osat:</label><br>
+                <textarea id="tutkinnon_osat" name="tutkinnon_osat" placeholder="Kirjoita suoritettavat tutkinnon osat"
+                    rows="2"></textarea><br>
+            </div>
+            <div class="input-field">
+                <label for="pvmt">Ajankohta:</label><br>
+                <input type="text" id="pvmt" name="pvmt" placeholder="Lisää top-päivät: xx.xx.20xx-xx.xx.20xx"><br>
+            </div>
+            <div class="input-field">
+                <label for="ytunnus">Työpaikan y-tunnus:</label><br>
+                <input type="text" id="ytunnus" name="ytunnus" placeholder="Lisää top-paikan y-tunnus"><br>
+            </div>
+            <div class="input-field">
+                <label for="kayntiosoite">Työpaikan käyntiosoite:</label><br>
+                <input type="text" id="kayntiosoite" name="kayntiosoite"
+                    placeholder="Lisää top-paikan käyntiosoite"><br>
+            </div>
+
+            <div class="input-field">
+                <label for="sopimuksen_allekirjoittajan_nimi">Sopimuksen allekirjoittajan nimi:</label><br>
+                <input type="text" id="sopimuksen_allekirjoittajan_nimi" name="sopimuksen_allekirjoittajan_nimi"
+                    placeholder="Kirjoita sopimuksen allekirjoittajan nimi"><br>
+            </div>
+            <div class="input-field">
+                <label for="sopimuksen_allekirjoittajan_email">Sopimuksen allekirjoittajan sähköposti:</label><br>
+                <input type="email" id="sopimuksen_allekirjoittajan_email" name="sopimuksen_allekirjoittajan_email"
+                    placeholder="Kirjoita sopimuksen allekirjoittajan sähköposti"><br>
+            </div>
+            <div class="input-field">
+                <label for="sopimuksen_allekirjoittajan_puhelin">Sopimuksen allekirjoittajan puhelin:</label><br>
+                <input type="tel" id="sopimuksen_allekirjoittajan_puhelin" name="allekirjoittajan_puhelin"
+                    placeholder="Kirjoita sopimuksen allekirjoittajan puhelin"><br>
+            </div>
+
+            <div class="input-field">
+                <label for="top-ohjaajan_nimi">Työpaikkaohjaajana nimi:</label><br>
+                <input type="text" id="top-ohjaajan_nimi" name="top-ohjaajan_nimi"
+                    placeholder="Kirjoita työpaikkaohjaajan nimi"><br>
+            </div>
+            <div class="input-field">
+                <label for="top-ohjaajan_email">Työpaikkaohjaajan sähköposti:</label><br>
+                <input type="email" id="top-ohjaajan_email" name="top-ohjaajan_email"
+                    placeholder="Kirjoita työpaikkaohjaajan sähköposti"><br>
+            </div>
+            <div class="input-field">
+                <label for="top-ohjaajan_puhelin">Työpaikkaohjaajan puhelin:</label><br>
+                <input type="tel" id="top-ohjaajan_puhelin" name="top-ohjaajan_puhelin"
+                    placeholder="Kirjoita työpaikkaohjaajan puhelin"><br>
+            </div>
+
+            <div class="input-field">
+                <input type="checkbox" id="valinta1" name="valinta1" value="Valinta">
+                <label for="valinta1"> Sähköinen allekirjoitus käytössä</label><br>
+                <input type="checkbox" id="valinta2" name="valinta2" value="Valinta">
+                <label for="valinta2"> Työpaikka järjestää työvaatetuksen</label><br>
+                <input type="checkbox" id="valinta3" name="valinta3" value="Valinta">
+                <label for="valinta3"> Työpaikka tarjoaa ilmaisen aterian</label><br>
+                <input type="checkbox" id="valinta4" name="valinta4" value="Valinta">
+                <label for="valinta4"> Työpaikalla on voimassa oleva vastuuvakuutus</label><br>
+                <input type="checkbox" id="valinta5" name="valinta5" value="Valinta">
+                <label for="valinta5"> Ohjaaja on tietoinen opiskelijan mahdollisista rajoitteista</label><br>
+            </div>
+
+            <div class="input-field">
+                <label for="message">Lisätiedot:</label><br>
+                <textarea id="message" name="message" placeholder="Kirjoita lisätiedot." rows="2"></textarea><br>
+            </div>
+
+            <div class="button-container">
+                <!--<input type="submit" class="button" value="Tyhjennä lomake" onclick="location.reload(); return false;"
+                    style="margin-top: 10px;">-->
+                <input type="button" class="button" value="Tyhjennä lomake" onclick="tyhjennaLomake()"
+                    style="margin-top: 10px;">
+                <button type="button" class="button" onclick="generatePDF()">Lataa ja jaa PDF</button>
+            </div>
+            <div class="footer">
+                <p><a href="https://eperusteet.opintopolku.fi/#/fi/" target="_blank">Eperusteet</a></p>
+                <p><a href="https://eperusteet.opintopolku.fi/#/fi/ammatillinen/8505690/tutkinnonosat"
+                        target="_blank">Liiketoiminnan perustutkinto OPH-4394-2023</a></p>
+                <p><a href="https://eperusteet.opintopolku.fi/#/fi/ammatillinen/7861752/tutkinnonosat"
+                        target="_blank">Tieto- ja viestintätekniikan perustutkinto OPH-4948-2021</a></p>
+                <p><a href="https://ytj.fi/" target="_blank">Tarkista yrityksen virallinen nimi (ytj.fi)</a></p>
+
+
+                <p>&copy; Jan Tuominen SASKY Tampereen palvelualan ammattiopisto</p>
+            </div>
+        </form>
+    </div>
+    <script>
+
+        // Tutkinnon osat ja Lisätietoja kentät kasvavat automaattisesti
+        window.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('textarea').forEach(function (element) {
+                element.addEventListener('input', autoResize, false);
+            });
+        });
+
+        function tyhjennaLomake() {
+            var form = document.getElementById('form');
+            var inputs = form.querySelectorAll('input, textarea');
+            inputs.forEach(input => {
+                if (input.type === 'text' || input.type === 'email' || input.type === 'tel' || input.tagName.toLowerCase() === 'textarea') {
+                    input.value = '';
+                } else if (input.type === 'checkbox') {
+                    input.checked = false;
+                }
+            });
+        }
+
+        function autoResize() {
+            this.style.height = 'auto';
+            this.style.height = this.scrollHeight + 'px';
+        }
+
+        async function generatePDF() {
+            var { jsPDF } = window.jspdf;
+            var doc = new jsPDF();
+
+            // Lisää logo ylämarginaaliin keskelle
+            var img = new Image();
+            img.src = 'sasky_logo.png';
+            //doc.addImage(img, 'PNG', (doc.internal.pageSize.getWidth() / 2) - 50, 10, 20, 20);
+
+            // Lisää logo ylämarginaaliin oikealle
+            var img = new Image();
+            img.src = 'sasky_logo.png';
+            var pageWidth = doc.internal.pageSize.getWidth();
+            var logoWidth = 20; // Logo leveys
+            var margin = 10; // Marginaali
+            doc.addImage(img, 'PNG', pageWidth - logoWidth - margin, margin, logoWidth, 20);
+
+
+            var nimi = document.getElementById('nimi').value || 'yhteystietolomake';
+            var pvmt = document.getElementById('pvmt').value || 'ajankohta';
+            var filename = nimi + '_' + pvmt + '.pdf';
+
+            var form = document.getElementById('form');
+            var inputs = form.querySelectorAll('input, textarea');
+            var y = 10;
+            var lineHeight = 10;
+            var maxWidth = 180; // Adjust the maximum width for text wrapping
+
+            doc.setFontSize(12);
+
+            inputs.forEach(input => {
+                if (input.type === 'text' || input.type === 'email' || input.type === 'tel' || input.tagName.toLowerCase() === 'textarea') {
+                    var label = form.querySelector(`label[for=${input.id}]`);
+                    var labelText = label ? label.innerText : '';
+                    var value = input.value || '';
+
+                    // Handle text wrapping for textarea
+                    if (input.tagName.toLowerCase() === 'textarea') {
+                        var lines = doc.splitTextToSize(labelText + ' ' + value, maxWidth);
+                        lines.forEach(line => {
+                            doc.text(line, 10, y);
+                            y += lineHeight;
+                        });
+                    } else {
+                        doc.text(labelText + ' ' + value, 10, y);
+                        y += lineHeight;
+                    }
+                } else if (input.type === 'checkbox') {
+                    var label = form.querySelector(`label[for=${input.id}]`).innerText;
+                    var value = input.checked ? 'Kyllä' : 'Ei';
+                    doc.text(label + ' ' + value, 10, y);
+                    y += lineHeight;
+                }
+            });
+
+            doc.save(filename);
+        }
+    </script>
+</body>
+
+</html>
 
