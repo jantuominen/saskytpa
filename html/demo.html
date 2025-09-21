@@ -1,1 +1,58 @@
+<!DOCTYPE html>
+<html lang="fi">
 
+<head>
+  <meta charset="UTF-8">
+  <title>SASKY</title>
+  <link rel="icon" href="html/toplomake/kuvat/favicon.ico" type="image/x-icon">
+  <style>
+    body {
+      font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      background-color: #f9f9f9;
+      color: #333;
+      padding: 20px;
+    }
+
+    h5 {
+      font-size: 18px;
+      margin-top: 15px;
+      margin-bottom: 5px;
+      color: #2c3e50;
+    }
+
+    a {
+      display: block;
+      margin: 5px 0;
+      text-decoration: none;
+      color: #0066cc;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h5>TOP-lomake</h5>
+  <a href="html/toplomake/index.html" target="_blank">TOP-paikan yhteystietolomake</a>
+
+  <h5>Wilma</h5>
+  <a href="html/index.html" target="_blank">Wilma-tekstit</a>
+
+
+ <h1>Sasky InSchool -sivun upotus</h1>
+    <iframe id="kohde" src="https://sasky.inschool.fi" title="Sasky InSchool">
+        Selaimesi ei tue iframe-elementtiä.
+    </iframe>
+    <script>
+        document.getElementById('kohde').onload = function() {
+            console.log('Iframe ladattu!');
+        };
+    </script>
+</body>
+
+</html>
