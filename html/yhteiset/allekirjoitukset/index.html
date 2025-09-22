@@ -1,1 +1,74 @@
+<!DOCTYPE html>
+<html lang="fi">
 
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="../../../html/toplomake/kuvat/favicon.ico" type="image/x-icon">
+    <title>Sähköiset allekirjoitukset</title>
+    <style>
+        .drag-text {
+            padding: 10px;
+            display: inline-block;
+            background-color: #e0e0e0;
+            cursor: grab;
+            user-select: none;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Koulutussopimus</h2>
+    <div id="koulutussopimus-container"></div>
+
+    <h2>Oppisopimus</h2>
+    <div id="oppisopimus-container"></div>
+
+    <h2>Näyttöarviointi</h2>
+    <div id="nayttoarviointi-container"></div>
+
+    <script>
+        function enableDrag(selector) {
+            const container = document.querySelector(selector);
+            const dragEl = container.querySelector('.drag-text');
+            if (dragEl) {
+                dragEl.addEventListener('dragstart', function (e) {
+                    e.dataTransfer.setData('text/plain', dragEl.textContent);
+                });
+            }
+        }
+
+        function loadExternalContent(containerId, fileName) {
+            fetch(fileName)
+                .then(response => response.text())
+                .then(data => {
+                    const container = document.getElementById(containerId);
+                    container.innerHTML = data;
+                    enableDrag('#' + containerId);
+                })
+                .catch(error => {
+                    console.error('Virhe ladattaessa tiedostoa:', fileName, error);
+                });
+        }
+
+        loadExternalContent('koulutussopimus-container', 'kousu.html');
+        loadExternalContent('oppisopimus-container', 'opso.html');
+        loadExternalContent('nayttoarviointi-container', 'naytto.html');
+
+        document.body.addEventListener('dragover', function (e) {
+            e.preventDefault();
+        });
+
+        document.body.addEventListener('drop', function (e) {
+            e.preventDefault();
+            const data = e.dataTransfer.getData('text/plain');
+            const p = document.createElement('p');
+            p.textContent = data;
+            document.body.appendChild(p);
+        });
+    </script>
+
+</body>
+
+</html>
