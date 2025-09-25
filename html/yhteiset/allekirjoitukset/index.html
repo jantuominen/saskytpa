@@ -28,6 +28,9 @@
     <h2>Näyttöarviointi</h2>
     <div id="nayttoarviointi-container"></div>
 
+    <h2>Erityisen tuen suunnitelma</h2>
+    <div id="ertu-container"></div>
+
     <script>
         function enableDrag(selector) {
             const container = document.querySelector(selector);
@@ -55,6 +58,8 @@
         loadExternalContent('koulutussopimus-container', 'kosu.html');
         loadExternalContent('oppisopimus-container', 'opso.html');
         loadExternalContent('nayttoarviointi-container', 'naytto.html');
+        loadExternalContent('ertu-container', 'ertu.html');
+
 
         document.body.addEventListener('dragover', function (e) {
             e.preventDefault();
