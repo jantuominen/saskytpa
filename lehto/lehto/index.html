@@ -14,13 +14,23 @@
     <button type="button" onclick="window.print()">Tulosta / tallenna PDF</button>
   </div>
 
-  <!-- SISÄLTÖ SÄÄNNÄLLEEN SAMANA -->
-  <!-- (tässä ei muuteta muuta kuin style -> css ja script -> js) -->
+  <main class="page">
+    <!-- KOKO SISÄLTÖ SÄILYTTÄEN ALKUPERÄISEN -->
+    <!-- tähän EI tarvita muutoksia -->
 
-  <!-- ... (tähän tulee koko alkuperäinen HTML sisältö SIIS TÄYSIN SAMANA, 
-       POISTAEN <style> ja <script> -osat) -->
+    <!-- (tässä kohtaa säilytät täysin alkuperäisen markupin:
+         header, taulukko, lomakekentät jne.) -->
+
+  </main>
+
+  <datalist id="partsList">
+    <option value="Akku"></option><option value="Hihna"></option><option value="Huoltotyöt"></option><option value="Ilmansuodatin"></option>
+    <option value="Jakopäänsarja"></option><option value="Jarrukengät"></option><option value="Jarrupalat"></option><option value="Laturi"></option>
+    <option value="Mobil ESP 5W/30"></option><option value="Neste Citypro 5W/40"></option><option value="Polttimo"></option><option value="Polttoainesuodatin"></option>
+    <option value="R.I.suodatin"></option><option value="Rele"></option><option value="Stefa"></option><option value="Sytytystulppa"></option>
+    <option value="vesipumppu"></option><option value="Öljynsuodatin"></option>
+  </datalist>
 
   <script src="script.js"></script>
 </body>
 </html>
-``
