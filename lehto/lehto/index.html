@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="fi">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Autokorjaamo LEHTO – Lasku</title>
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
   <div class="toolbar no-print">
@@ -31,7 +33,11 @@
           <label for="invoiceNo">Laskun numero</label>
           <input id="invoiceNo" type="number" min="1" value="105" />
           <label for="dueDate">Eräpäivä</label>
-          <div><span id="dueDateFI"></span><input id="dueDate" type="date" readonly /></div>
+          <!--<div><span id="dueDateFI"></span><input id="dueDate" type="date" readonly /></div>-->
+          <div>
+            <span id="dueDateFI"></span>
+            <!--<input id="dueDate" type="date" readonly />-->
+          </div>
           <label for="paymentTerm">Maksuehto</label>
           <input id="paymentTerm" value="14 päivää netto" />
           <label for="interest">Viivästyskorko</label>
@@ -71,7 +77,8 @@
         </thead>
         <tbody id="linesBody"></tbody>
       </table>
-      <button type="button" class="secondary no-print" onclick="addRow()" style="margin-top:8px;">+ Lisää tuoterivi</button>
+      <button type="button" class="secondary no-print" onclick="addRow()" style="margin-top:8px;">+ Lisää
+        tuoterivi</button>
     </section>
 
     <section class="summary-wrap">
@@ -83,10 +90,22 @@
         <input id="discount" type="number" step="0.01" value="0" oninput="calculateAll()" />
       </div>
       <table class="summary">
-        <tr><td>Veroton hinta yht</td><td id="netTotal">0,00 €</td></tr>
-        <tr><td>Arvonlisävero yht</td><td id="vatTotal">0,00 €</td></tr>
-        <tr><td>Vähennys</td><td id="discountShown">0,00 €</td></tr>
-        <tr class="grand"><td>Yhteensä</td><td id="grandTotal">0,00 €</td></tr>
+        <tr>
+          <td>Veroton hinta yht</td>
+          <td id="netTotal">0,00 €</td>
+        </tr>
+        <tr>
+          <td>Arvonlisävero yht</td>
+          <td id="vatTotal">0,00 €</td>
+        </tr>
+        <tr>
+          <td>Vähennys</td>
+          <td id="discountShown">0,00 €</td>
+        </tr>
+        <tr class="grand">
+          <td>Yhteensä</td>
+          <td id="grandTotal">0,00 €</td>
+        </tr>
       </table>
     </section>
 
@@ -111,13 +130,27 @@
   </main>
 
   <datalist id="partsList">
-    <option value="Akku"></option><option value="Hihna"></option><option value="Huoltotyöt"></option><option value="Ilmansuodatin"></option>
-    <option value="Jakopäänsarja"></option><option value="Jarrukengät"></option><option value="Jarrupalat"></option><option value="Laturi"></option>
-    <option value="Mobil ESP 5W/30"></option><option value="Neste Citypro 5W/40"></option><option value="Polttimo"></option><option value="Polttoainesuodatin"></option>
-    <option value="R.I.suodatin"></option><option value="Rele"></option><option value="Stefa"></option><option value="Sytytystulppa"></option>
-    <option value="vesipumppu"></option><option value="Öljynsuodatin"></option>
+    <option value="Akku"></option>
+    <option value="Hihna"></option>
+    <option value="Huoltotyöt"></option>
+    <option value="Ilmansuodatin"></option>
+    <option value="Jakopäänsarja"></option>
+    <option value="Jarrukengät"></option>
+    <option value="Jarrupalat"></option>
+    <option value="Laturi"></option>
+    <option value="Mobil ESP 5W/30"></option>
+    <option value="Neste Citypro 5W/40"></option>
+    <option value="Polttimo"></option>
+    <option value="Polttoainesuodatin"></option>
+    <option value="R.I.suodatin"></option>
+    <option value="Rele"></option>
+    <option value="Stefa"></option>
+    <option value="Sytytystulppa"></option>
+    <option value="vesipumppu"></option>
+    <option value="Öljynsuodatin"></option>
   </datalist>
 
   <script src="script.js"></script>
 </body>
+
 </html>
