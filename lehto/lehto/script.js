@@ -128,7 +128,7 @@ function addRow(description = '', qty = '', unit = 'kpl', price = '') {
 
     tr.innerHTML = `
         <td><input list="partsList" class="desc" value="${description}" oninput="calculateAll()"></td>
-        <td><input class="qty" type="number" step="0.01" min="0" value="${qty}" oninput="calculateAll()"></td>
+        <td><input class="qty" type="number" step="1" min="0" value="${qty}" oninput="calculateAll()"></td>
         <td><input class="unit" value="${unit}" oninput="calculateAll()"></td>
         <td><input class="price" type="number" step="0.01" min="0" value="${price}" oninput="calculateAll()"></td>
         <td class="num"><input class="money lineVat" readonly value="0,00 €"></td>
@@ -166,7 +166,10 @@ function calculateAll() {
     let grossTotal = 0;
 
     document.querySelectorAll('#linesBody tr').forEach(row => {
-        const qty = Number(row.querySelector('.qty').value) || 0;
+        let qty = Number(row.querySelector('.qty').value) || 0;
+        qty = Math.floor(qty);
+        row.querySelector('.qty').value = qty;
+
         const price = Number(row.querySelector('.price').value) || 0;
 
         const lineGross = qty * price;
