@@ -19,16 +19,13 @@ function todayISO() {
 }
 
 function todayFI() {
-    const d = new Date();
-
-    return d.toLocaleDateString('fi-FI');
+    return new Date().toLocaleDateString('fi-FI');
 }
 
 function formatDateFI(dateISO) {
     if (!dateISO) return '';
 
     const parts = dateISO.split('-');
-
     if (parts.length !== 3) return '';
 
     const year = parts[0];
@@ -41,34 +38,16 @@ function formatDateFI(dateISO) {
 function parseFI(dateStr) {
     if (!dateStr) return todayISO();
 
-    const cleaned = dateStr.trim();
-    const parts = cleaned.split('.');
-
+    const parts = dateStr.trim().split('.');
     if (parts.length !== 3) return todayISO();
 
-    const day = parts[0].trim();
-    const month = parts[1].trim();
-    const year = parts[2].trim();
+    const [day, month, year] = parts.map(p => Number(p.trim()));
 
-    if (!day || !month || !year) return todayISO();
-
-    const dayNumber = Number(day);
-    const monthNumber = Number(month);
-    const yearNumber = Number(year);
-
-    if (
-        Number.isNaN(dayNumber) ||
-        Number.isNaN(monthNumber) ||
-        Number.isNaN(yearNumber)
-    ) {
+    if ([day, month, year].some(Number.isNaN)) {
         return todayISO();
     }
 
-    const dd = String(dayNumber).padStart(2, '0');
-    const mm = String(monthNumber).padStart(2, '0');
-    const yyyy = String(yearNumber);
-
-    return `${yyyy}-${mm}-${dd}`;
+    return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
 }
 
 function addDaysISO(dateISO, days) {
@@ -83,33 +62,19 @@ function addDaysISO(dateISO, days) {
 
 function getPaymentDays() {
     const term = document.getElementById('paymentTerm').value.toLowerCase();
+    const match = term.match(/\d+/);
 
-    /*
-      Tukee esimerkiksi:
-      - 14 pv netto
-      - 14 pv
-      - 14 päivää netto
-      - 30 päivää
-      - netto 14
-    */
-
-    const numberMatch = term.match(/\d+/);
-
-    if (numberMatch) {
-        return Number(numberMatch[0]);
-    }
-
-    return 14;
+    return match ? Number(match[0]) : 14;
 }
 
 function setDueDate() {
     const invoiceDateFI = document.getElementById('invoiceDate').value;
     const invoiceDateISO = parseFI(invoiceDateFI);
 
-    const paymentDays = getPaymentDays();
-    const dueDateISO = addDaysISO(invoiceDateISO, paymentDays);
+    const dueDateISO = addDaysISO(invoiceDateISO, getPaymentDays());
 
-    document.getElementById('dueDateFI').textContent = formatDateFI(dueDateISO);
+    document.getElementById('dueDateFI').textContent =
+        formatDateFI(dueDateISO);
 
     return dueDateISO;
 }
@@ -127,8 +92,7 @@ function finnishReference(prefix, base) {
     const g9 = Math.max(0, parseInt(prefix || '0', 10) || 0);
     const g8 = Math.max(0, parseInt(base || '0', 10) || 0);
 
-    const bodyNumber = (g9 * 1000000) + g8;
-    const body = String(bodyNumber);
+    const body = String((g9 * 1000000) + g8);
 
     const weights = [7, 3, 1];
     let sum = 0;
@@ -152,12 +116,9 @@ function groupReference(ref) {
 }
 
 function updateReference() {
-    if (referenceBase === null) {
-        generateReferenceBase();
-    }
+    if (referenceBase === null) generateReferenceBase();
 
     const ref = finnishReference(referencePrefix, referenceBase);
-
     document.getElementById('referenceNumber').textContent = groupReference(ref);
 }
 
@@ -166,74 +127,18 @@ function addRow(description = '', qty = '', unit = 'kpl', price = '') {
     const tr = document.createElement('tr');
 
     tr.innerHTML = `
-    <td>
-      <input
-        list="partsList"
-        class="desc"
-        value="${description}"
-        oninput="calculateAll()"
-      >
-    </td>
-
-    <td>
-      <input
-        class="qty"
-        type="number"
-        step="0.01"
-        min="0"
-        value="${qty}"
-        oninput="calculateAll()"
-      >
-    </td>
-
-    <td>
-      <input
-        class="unit"
-        value="${unit}"
-        oninput="calculateAll()"
-      >
-    </td>
-
-    <td>
-      <input
-        class="price"
-        type="number"
-        step="0.01"
-        min="0"
-        value="${price}"
-        oninput="calculateAll()"
-      >
-    </td>
-
-    <td class="num">
-      <input
-        class="money lineVat"
-        readonly
-        value="0,00 €"
-      >
-    </td>
-
-    <td class="num">
-      <input
-        class="money lineTotal"
-        readonly
-        value="0,00 €"
-      >
-    </td>
-
-    <td class="remove-cell no-print">
-      <button
-        type="button"
-        class="removeBtn"
-        onclick="removeRow(this)"
-      >
-        Poista
-      </button>
-    </td>
-  `;
+        <td><input list="partsList" class="desc" value="${description}" oninput="calculateAll()"></td>
+        <td><input class="qty" type="number" step="0.01" min="0" value="${qty}" oninput="calculateAll()"></td>
+        <td><input class="unit" value="${unit}" oninput="calculateAll()"></td>
+        <td><input class="price" type="number" step="0.01" min="0" value="${price}" oninput="calculateAll()"></td>
+        <td class="num"><input class="money lineVat" readonly value="0,00 €"></td>
+        <td class="num"><input class="money lineTotal" readonly value="0,00 €"></td>
+        <td class="remove-cell no-print">
+            <button type="button" class="removeBtn" onclick="removeRow(this)">Poista</button>
+        </td>
+    `;
 
     tbody.appendChild(tr);
-
     calculateAll();
 }
 
@@ -244,7 +149,6 @@ function removeRow(button) {
         button.closest('tr').remove();
     } else {
         const row = button.closest('tr');
-
         row.querySelectorAll('input').forEach(input => {
             if (!input.readOnly) {
                 input.value = input.classList.contains('unit') ? 'kpl' : '';
@@ -266,9 +170,7 @@ function calculateAll() {
         const price = Number(row.querySelector('.price').value) || 0;
 
         const lineGross = qty * price;
-        const lineVat = vatRate > 0
-            ? lineGross * vatRate / (1 + vatRate)
-            : 0;
+        const lineVat = vatRate > 0 ? lineGross * vatRate / (1 + vatRate) : 0;
 
         grossTotal += lineGross;
 
@@ -276,17 +178,10 @@ function calculateAll() {
         row.querySelector('.lineTotal').value = euro(lineGross);
     });
 
-    const discount = Math.max(
-        0,
-        Number(document.getElementById('discount').value) || 0
-    );
-
+    const discount = Math.max(0, Number(document.getElementById('discount').value) || 0);
     const finalGross = Math.max(0, grossTotal - discount);
 
-    const vatTotal = vatRate > 0
-        ? finalGross * vatRate / (1 + vatRate)
-        : 0;
-
+    const vatTotal = vatRate > 0 ? finalGross * vatRate / (1 + vatRate) : 0;
     const netTotal = finalGross - vatTotal;
 
     document.getElementById('netTotal').textContent = euro(netTotal);
@@ -299,30 +194,47 @@ function calculateAll() {
 
 function clearForm() {
     document.querySelectorAll('input, textarea').forEach(el => {
-        if (el.id === 'vatPercent') {
-            el.value = '25.5';
-        } else if (el.id === 'invoiceNo') {
-            el.value = '';
-        } else if (el.id === 'paymentTerm') {
-            el.value = '14 pv netto';
-        } else if (el.id === 'interest') {
-            el.value = '8 %';
-        } else if (el.id === 'invoiceDate') {
-            el.value = todayFI();
-        } else if (!el.readOnly) {
-            el.value = '';
-        }
+        if (el.id === 'vatPercent') el.value = '25.5';
+        else if (el.id === 'invoiceNo') el.value = '';
+        else if (el.id === 'paymentTerm') el.value = '14 pv netto';
+        else if (el.id === 'interest') el.value = '8 %';
+        else if (el.id === 'invoiceDate') el.value = todayFI();
+        else if (!el.readOnly) el.value = '';
     });
 
     generateReferenceBase();
-
     document.getElementById('linesBody').innerHTML = '';
 
     addRow('', 1, 'kpl', '');
-    initAutoResize()
+
+    // ✅ resetoi textarea-korkeus
+    document.querySelectorAll('textarea').forEach(t => t.style.height = '32px');
+
+    // ✅ aktivoi autoresize
+    initAutoResize();
+
     updateDates();
     calculateAll();
 }
+
+/* ===== AUTOREsize ===== */
+
+function autoResizeTextarea(el) {
+    el.style.height = 'auto';
+    el.style.height = el.scrollHeight + 'px';
+}
+
+function initAutoResize() {
+    document.querySelectorAll('textarea').forEach(textarea => {
+        autoResizeTextarea(textarea);
+
+        textarea.addEventListener('input', function () {
+            autoResizeTextarea(this);
+        });
+    });
+}
+
+/* ===== INIT ===== */
 
 document.addEventListener('DOMContentLoaded', () => {
     generateReferenceBase();
@@ -331,27 +243,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     addRow('', 1, 'kpl', '');
 
+    // ✅ ensin reset
+    document.querySelectorAll('textarea').forEach(t => t.style.height = '32px');
+
+    // ✅ sitten autoresize
     initAutoResize();
 
     updateDates();
     calculateAll();
 });
-
-function autoResizeTextarea(el) {
-    el.style.height = 'auto';              // nollataan korkeus
-    el.style.height = (el.scrollHeight) + 'px'; // asetetaan sisällön mukaan
-}
-
-// otetaan käyttöön kaikille textarea-kentille
-function initAutoResize() {
-    document.querySelectorAll('textarea').forEach(textarea => {
-
-        // alkuvaiheen korkeus
-        autoResizeTextarea(textarea);
-
-        // resize kirjoitettaessa
-        textarea.addEventListener('input', function () {
-            autoResizeTextarea(this);
-        });
-    });
-}
