@@ -109,17 +109,15 @@ select {
     background: #fff;
 }
 
-.small-textarea {
-    min-height: auto;
+textarea {
+    resize: none;
+    /* ei manuaalista venytystä */
     height: 32px;
-    /* yhden rivin korkeus */
+    /* aloituskorkeus = yksi rivi */
     overflow: hidden;
+    /* ei scroll-baria */
 }
 
-textarea {
-    resize: vertical;
-    min-height: 78px;
-}
 
 input[readonly] {
     border-color: transparent;
