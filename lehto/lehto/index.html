@@ -98,13 +98,13 @@
             <div>
                 <h3>Vähennys</h3>
 
-                <label for="discountText">Selite vähennykselle</label>
+                <label for="discount" style="display:block;margin-top:8px;">Vähennys €</label>
+                <input id="discount" type="number" step="0.01" value="0" oninput="calculateAll()" />
+
+                <label for="discountText">Selite</label>
                 <input id="discountText" placeholder="" />
 
-                <label for="discount" style="display:block;margin-top:8px;">
-                    Vähennys €
-                </label>
-                <input id="discount" type="number" step="0.01" value="0" oninput="calculateAll()" />
+
             </div>
 
             <table class="summary">
