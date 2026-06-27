@@ -1,0 +1,336 @@
+:root {
+    --border: #222;
+    --muted: #666;
+    --bg: #f6f7f9;
+    --paper: #fff;
+    --accent: #1f5f8b;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: #111;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.35;
+}
+
+.toolbar {
+    max-width: 980px;
+    margin: 18px auto 0;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    padding: 0 12px;
+}
+
+button {
+    border: 1px solid var(--accent);
+    background: var(--accent);
+    color: #fff;
+    padding: 9px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+button.secondary {
+    background: #fff;
+    color: var(--accent);
+}
+
+.page {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 18px auto;
+    background: var(--paper);
+    padding: 16mm;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, .12);
+}
+
+.top {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: start;
+    margin-bottom: 12mm;
+}
+
+h1 {
+    margin: 0 0 10px;
+    font-size: 31px;
+    letter-spacing: .04em;
+    text-align: right;
+}
+
+h2 {
+    margin: 0 0 8px;
+    font-size: 21px;
+}
+
+h3 {
+    margin: 16px 0 7px;
+    font-size: 15px;
+}
+
+.locked {
+    font-weight: 700;
+}
+
+.small {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.invoice-meta {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 6px 8px;
+    align-items: center;
+    font-size: 14px;
+}
+
+label {
+    font-weight: 700;
+    font-size: 13px;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    padding: 6px 7px;
+    font: inherit;
+    background: #fff;
+}
+
+textarea {
+    resize: none;
+    /* ei manuaalista venytystä */
+    height: 32px;
+    /* aloituskorkeus = yksi rivi */
+    overflow: hidden;
+    /* ei scroll-baria */
+}
+
+
+input[readonly] {
+    border-color: transparent;
+    background: transparent;
+    font-weight: 700;
+    padding-left: 0;
+}
+
+.date-display {
+    padding: 6px 0;
+    font: inherit;
+    font-weight: 400;
+    color: #111;
+}
+
+.customer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 10mm;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 6px;
+    font-size: 13px;
+}
+
+th,
+td {
+    border: 1px solid var(--border);
+    padding: 5px;
+    vertical-align: top;
+}
+
+th {
+    background: #eef3f8;
+    text-align: left;
+}
+
+td.num,
+th.num {
+    text-align: right;
+}
+
+.lines input,
+.lines select {
+    border: 0;
+    padding: 4px;
+    border-radius: 0;
+}
+
+.lines .qty {
+    width: 72px;
+    text-align: right;
+}
+
+.lines .unit {
+    width: 75px;
+}
+
+.lines .price {
+    width: 95px;
+    text-align: right;
+}
+
+.lines .money {
+    width: 90px;
+    text-align: right;
+}
+
+.removeBtn {
+    width: auto;
+    padding: 3px 7px;
+    font-size: 12px;
+    border-radius: 4px;
+    background: #fff;
+    color: #9b1c1c;
+    border-color: #9b1c1c;
+}
+
+.summary-wrap {
+    display: grid;
+    grid-template-columns: 1fr 82mm;
+    gap: 14px;
+    margin-top: 10mm;
+    align-items: start;
+}
+
+.summary {
+    width: 100%;
+    font-size: 14px;
+}
+
+.summary td:first-child {
+    font-weight: 700;
+}
+
+.summary td:last-child {
+    text-align: right;
+}
+
+.grand td {
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.footer {
+    margin-top: 10mm;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    border-top: 1px solid #444;
+    padding-top: 9mm;
+    font-size: 13px;
+}
+
+/*
+.reference-box {
+    margin-top: 10mm;
+    padding: 2px 4px;
+    border: 1px solid #222;
+    display: inline-block;
+    min-width: 80mm;
+}
+*/
+
+
+.reference-box {
+    margin-top: 4mm;
+    margin-bottom: 2mm;
+}
+
+
+#referenceNumber {
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: .04em;
+}
+
+@page {
+    size: A4;
+    margin: 10mm;
+}
+
+@media print {
+    body {
+        background: white;
+    }
+
+    .toolbar,
+    .no-print,
+    .remove-cell {
+        display: none !important;
+    }
+
+    .page {
+        width: auto;
+        min-height: auto;
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+    }
+
+    input,
+    textarea,
+    select {
+        border: none !important;
+        padding: 0 !important;
+        background: transparent !important;
+        appearance: none;
+    }
+
+    textarea {
+        min-height: 0;
+        overflow: hidden;
+    }
+
+    th {
+        background: #eee !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .lines .remove-col {
+        display: none;
+    }
+
+    .reference-box {
+        border: 0;
+        padding: 0;
+    }
+}
+
+.input-percent {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.input-percent input {
+    padding-right: 18px; /* pieni tila prosenttimerkille */
+}
+
+.input-percent .suffix {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    
+    /* ✅ EI oikeaan reunaan */
+    left: 40px;  /* säädetään prosentti merkki linjaan alv-lukuarvon kanssa */
+
+    pointer-events: none;
+    color: #555;
+}
