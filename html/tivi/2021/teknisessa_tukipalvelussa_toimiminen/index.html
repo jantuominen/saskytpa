@@ -43,6 +43,9 @@
     <h2>Näytön perustelut</h2>
     <div id="nayttoperustelut-container"></div>
 
+    <h2>Ammattitaidon hankkiminen</h2>
+    <div id="ammattitaito-container"></div>
+
     <script>
         function enableDrag(selector) {
             const container = document.querySelector(selector);
@@ -75,6 +78,7 @@
         loadExternalContent('nayttosuunnitelma-container', '../../../yhteiset/nayttosuunnitelma.html');
         loadExternalContent('nayttokuvaus-container', 'nayttokuvaus.html');
         loadExternalContent('nayttoperustelut-container', 'nayttoperustelut.html');
+        loadExternalContent('ammattitaito-container', 'ammattitaidon_hankkiminen.html');
 
         document.body.addEventListener('dragover', function (e) {
             e.preventDefault();
