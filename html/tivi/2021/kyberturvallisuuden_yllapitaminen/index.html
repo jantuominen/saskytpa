@@ -43,8 +43,11 @@
     <h2>Näytön perustelut</h2>
     <div id="nayttoperustelut-container"></div>
 
-    <h2>Ammattitaidon hankkiminen</h2>
-    <div id="ammattitaito-container"></div>
+    <h2>Paikallisen tutkinnon osan tavoitteet</h2>
+    <div id="tutkinnon_osan_tavoitteet-container"></div>
+
+    <h2>Paikallisen tutkinnon osan sisältö</h2>
+    <div id="tutkinnon_osan_sisalto-container"></div>
 
     <script>
         function enableDrag(selector) {
@@ -78,7 +81,8 @@
         loadExternalContent('nayttosuunnitelma-container', '../../../yhteiset/nayttosuunnitelma.html');
         loadExternalContent('nayttokuvaus-container', 'nayttokuvaus.html');
         loadExternalContent('nayttoperustelut-container', 'nayttoperustelut.html');
-        loadExternalContent('ammattitaito-container', 'ammattitaidon_hankkiminen.html');
+        loadExternalContent('tutkinnon_osan_tavoitteet-container', 'paikallisen_tutkinnon_osan_tavoitteet.html');
+        loadExternalContent('tutkinnon_osan_sisalto-container', 'paikallisen_tutkinnon_osan_sisalto.html');
 
         document.body.addEventListener('dragover', function (e) {
             e.preventDefault();
